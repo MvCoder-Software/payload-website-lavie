@@ -19,7 +19,19 @@ export const Users: CollectionConfig = {
   fields: [
     {
       name: 'name',
+      label: 'Nome',
       type: 'text',
+    },
+    {
+      name: 'avatar',
+      type: 'upload',
+      relationTo: 'media',
+    },
+    {
+      name: 'user_active?',
+      label: 'usuário ativo?',
+      type: 'checkbox',
+      defaultValue: true,
     },
   ],
   timestamps: true,

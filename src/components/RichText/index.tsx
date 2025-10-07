@@ -38,6 +38,20 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
 const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
   ...LinkJSXConverter({ internalDocToHref }),
+
+  text: ({ node }) => {
+    const textNode = node as any // 👈 ignora tipo para acessar os extras
+    let colorClass = (textNode?.[`$`]?.color ?? '').trim()
+    const backgroundClass = textNode?.textStyle?.backgroundColor ?? ''
+    if (colorClass.includes('_custom')) {
+      colorClass = `text-${colorClass.split('_')[0]}`
+    }
+    if (!colorClass.includes('black')) {
+      colorClass = `${colorClass}-500`
+    }
+    return <span className={`${colorClass.trim()} ${backgroundClass}`}>{node.text}</span>
+  },
+
   blocks: {
     banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
     mediaBlock: ({ node }) => (

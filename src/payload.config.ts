@@ -4,6 +4,7 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import sharp from 'sharp' // sharp-import
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
+import { pt } from '@payloadcms/translations/languages/pt'
 import { fileURLToPath } from 'url'
 
 import { Categories } from './collections/Categories'
@@ -21,7 +22,12 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  i18n: {
+    supportedLanguages: { pt },
+    fallbackLanguage: 'pt',
+  },
   admin: {
+    avatar: 'gravatar',
     components: {
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
@@ -30,6 +36,7 @@ export default buildConfig({
       // Feel free to delete this at any time. Simply remove the line below.
       beforeDashboard: ['@/components/BeforeDashboard'],
     },
+    dateFormat: 'dd/MM/yyyy hh:mm:ss',
     importMap: {
       baseDir: path.resolve(dirname),
     },

@@ -1,10 +1,12 @@
 import type { Field } from 'payload'
 
 import {
+  defaultColors,
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
   lexicalEditor,
+  TextStateFeature,
 } from '@payloadcms/richtext-lexical'
 
 import { linkGroup } from '@/fields/linkGroup'
@@ -42,12 +44,34 @@ export const hero: Field = {
       name: 'richText',
       type: 'richText',
       editor: lexicalEditor({
-        features: ({ rootFeatures }) => {
+        features: ({ defaultFeatures, rootFeatures }) => {
           return [
             ...rootFeatures,
+            ...defaultFeatures,
             HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
             FixedToolbarFeature(),
             InlineToolbarFeature(),
+            TextStateFeature({
+              state: {
+                color: {
+                  ...defaultColors.text,
+                  galaxy: {
+                    label: 'Galaxy',
+                    css: {
+                      background: 'linear-gradient(to right, #0000ff, #ff0000)',
+                      color: 'white',
+                    },
+                  },
+                  black_custom: {
+                    label: 'Black',
+                    css: {
+                      color: 'white',
+                      background: 'black',
+                    },
+                  },
+                },
+              },
+            }),
           ]
         },
       }),
